@@ -14,7 +14,7 @@ import shapes
 fig, ax = plt.subplots()
 
 circle_1 = shapes.GeneralizedCircle(0 + 0j, 1)
-circle_2 = shapes.GeneralizedCircle(0 + 3j, 1)
+circle_2 = shapes.GeneralizedCircle(0 + 2j, 1)
 plot_circle(ax, circle_1)
 plot_circle(ax, circle_2)
 
@@ -31,12 +31,12 @@ def inversion(gen_circle: shapes.GeneralizedCircle, circle: shapes.GeneralizedCi
     m = mobius.MobiusTransform(a, b, c, d)
 
     points = circle.get_three_points()
-    inv_points = np.array([m(p) for p in points])
+    inv_points = np.array([m(p.conjugate()) for p in points])
     print(len(inv_points))
     return inv_points
 
-points = inversion(circle_1, circle_2)
-plot_circle(ax, shapes.GeneralizedCircle.from_three_points(*points))
+inv_circle = circle_1.inversion(circle_2)
+plot_circle(ax, inv_circle)
 # Invert line
 plt.gca().set_aspect('equal')
 plt.show()

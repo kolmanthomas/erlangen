@@ -1,5 +1,6 @@
 import numpy as np
 import shapely as shp
+import mobius
 import cmath
 
 class Circle:
@@ -43,7 +44,6 @@ class GeneralizedCircle:
         r = abs(z1 - c)
         return cls(c, r)
 
-
     def get_three_points(self) -> np.ndarray:
         """
             Returns three points on the circle.
@@ -55,4 +55,21 @@ class GeneralizedCircle:
             #[north.real, north.imag], 
             #[west.real, west.imag], 
             #[east.real, east.imag]])
+
+    def inversion(self, circle: 'GeneralizedCircle'):
+        """
+            Inverts a generalized circle with respect to itself.
+        """
+        a = self.c
+        b = self.r**2 - self.c * self.c.conjugate()
+        c = 1
+        d = -self.c.conjugate()
+        m = mobius.MobiusTransform(a, b, c, d)
+
+        points = circle.get_three_points()
+        inv_points = np.array([m(p.conjugate()) for p in points])
+        inverted_circle = GeneralizedCircle.from_three_points(*inv_points)
+        return inverted_circle
+
+
 
