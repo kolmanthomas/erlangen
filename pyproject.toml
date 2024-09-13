@@ -1,0 +1,6 @@
+[project]
+
+[tool.pytest.ini_options]
+pythonpath = [
+    ".", "erlangen"
+]
