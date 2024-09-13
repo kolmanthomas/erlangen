@@ -1,1 +1,1 @@
-![Pappus Chain](./gif/pappus_chain.gif)
+![Pappus Chain](./gifs/pappus_chain.gif)
